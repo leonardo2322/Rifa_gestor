@@ -1,0 +1,137 @@
+{% extends "tabla_estructura.html" %}
+{% load custom_tags %}
+{% block title %} 
+<h1 class="title">Tabla de jugadores</h1> <h5 class="text-muted">Total dinero Recogido: {{ total_dinero }}$</h5> 
+<div>
+    <form method="GET" action="">
+        <input type="text" class="form-control" name="q" id="search" placeholder="Buscar...">
+        <button type="submit" class="btn btn-outline-primary mt-2">
+            <i class="fas fa-search"></i>
+            buscar
+        </button>
+    </form>
+</div>
+
+{% endblock title %}
+        {% block head %}
+            <tr>
+            <th scope="col" class="text-center">Nr°</th>
+            <th scope="col" class="text-center">Nombre</th>
+            <th scope="col" class="text-center">Telefono</th>
+            <th scope="col" class="text-center">Numeros Jugados</th>
+            <th scope="col" class="text-center">Estado</th>
+            <th scope="col" class="text-center">Abonos</th>
+            <th scope="col" class="text-center">Total a Pagar</th>
+            <th scope="col" class="text-center">Opciones</th>
+            </tr>
+        {% endblock %}
+        {% block columns %} 
+              {% for item in jugadores %}
+                    <tr>
+                    <td scope="row">{{ item.id }}</td>
+                    <td>{{ item.nombre }}</td>
+                    <td  class="text-center">{{ item.telefono }}</td>
+                    <td>{% for n in item.numeros %}
+                        {{ n }}
+                    {% endfor %}
+                    </td>
+                    <td>{% if item.estado %}
+                        <span class="text-white bg-success rounded p-1">Pagado</span>
+                        {%else%}
+                        <span class="text-white bg-danger rounded p-1">Por Pagar</span>
+                        {% endif %}
+                    </td>
+                    <td>{% if item.estado %}
+                            <span class="text-white bg-success rounded p-1">Cancelado<span>
+                        {% else %}
+                            {{ item.abono }}
+                        {% endif %}
+                    </td>
+                    <td> {% if item.abono == 0 %}
+                            0 <span>$</span>
+                        {% else %}
+                            {{ item.abono|total:item.numeros }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        <form
+                        action="{% url 'abonar' pk=item.pk %}"
+                        method="post"
+                        style="display: inline"
+                        >
+                        {% csrf_token %}
+                        <button class="btn btn-success btn-xs" type="submit">
+                            <i class="fas fa-file-invoice-dollar text-white"></i>
+                        </button>
+                        </form>
+                        <form
+                        action="{% url 'actualizar' item.pk %}"
+                        method="post"
+                        style="display: inline"
+                        >
+                        {% csrf_token %}
+
+                        <button class="btn btn-primary btn-xs" type="submit">
+                            <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            fill="currentColor"
+                            class="bi bi-pencil-square"
+                            viewBox="0 0 16 16"
+                            >
+                            <path
+                                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+                            />
+                            <path
+                                fill-rule="evenodd"
+                                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"
+                            />
+                            </svg>
+                        </button>
+                        </form>
+                        <form
+                        action="{% url 'Eliminar' item.pk %}"
+                        method="post"
+                        style="display: inline"
+                        >
+                        {% csrf_token %}
+                        <button class="btn btn-danger btn-xs" type="submit">
+                            <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            fill="currentColor"
+                            class="bi bi-trash3"
+                            viewBox="0 0 16 16"
+                            >
+                            <path
+                                d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"
+                            />
+                            </svg>
+                        </button>
+                        </form>
+                    </td>
+                    </tr>
+            {% endfor %} 
+        
+        {% endblock %}
+       {% block botones %} 
+         
+                    <div class="pagination d-flex justify-content-center">
+                            {% if jugadores.has_previous %}
+                                <a href="?page=1" class="btn btn-outline-primary m-2">Primera</a>
+                                <a href="?page={{ jugadores.previous_page_number }}" class="btn btn-outline-primary m-2">Anterior</a>
+                            {% endif %}
+                            
+                            <span>Página {{ jugadores.number }} de {{ jugadores.paginator.num_pages }}</span>
+                            
+                            {% if jugadores.has_next %}
+                                <a href="?page={{ jugadores.next_page_number }}" class="btn btn-outline-primary m-2">Siguiente</a>
+                                <a href="?page={{ jugadores.paginator.num_pages }}" class="btn btn-outline-primary m-2">Última</a>
+                            {% endif %}
+                        </div>
+        {% endblock botones %}
+    
+               
+ 

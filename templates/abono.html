@@ -1,0 +1,19 @@
+{% extends "Base.html" %} {% load custom_tags %} {% block container %}
+<div
+  class="p-4 rounded text-white mt-5 d-flex justify-content-center"
+  style="background-color: rgb(2, 0, 26)"
+>
+<form method="post" action="{% url 'guardar' pk=cliente.pk %}">
+    {% csrf_token %}
+    <h2 class="text-center mb-4">Abono Clientes</h2>
+    
+    <!-- Campo para ingresar el nuevo abono -->
+    <div class="form-group">
+        <label for="abono">Nuevo abono:</label>
+        <input type="number" name="abono" id="abono" class="form-control mt-3" step="0.01" required>
+    </div>
+    
+    <button type="submit" class="btn btn-primary mt-3">Actualizar abono</button>
+</form>
+</div>
+{% endblock container %}

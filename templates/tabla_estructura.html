@@ -1,0 +1,36 @@
+{% extends "Base.html" %} 
+{% load static %}
+{% block container %}
+
+<div class="card card-default m-5 text-center">
+  <div class="card-header">
+    <div class="card-title">{% block title %} {% endblock title %}</div>
+  </div>
+  <table class="table table-striped" id="table_list">
+    <thead>{% block head %} {% endblock head %}</thead>
+    <tbody>{% block columns %} {% endblock columns %}</tbody>
+  </table>
+  <div class="card-footer">
+    {% block botones %} 
+    {% endblock botones %}
+  </div>
+</div>
+{% endblock container %} 
+{% block scripts %}
+<script>
+  $(document).ready(function() {
+    // Asegúrate de inicializar DataTables solo si el ID existe
+    if ($('#table_list').length) {
+      $('#table_list').DataTable({
+        paging: false, // Activa/desactiva paginación
+        searching: false, // Activa/desactiva búsqueda
+        ordering: true, // Activa/desactiva ordenamiento
+        pageLength: 10, // Número de filas por página
+        language: {
+          url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json", // Traducción
+        },
+      });
+    }
+  });
+</script>
+{% endblock scripts %}

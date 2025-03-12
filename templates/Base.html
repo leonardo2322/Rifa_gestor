@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{% static 'bootstrap/css/bootstrap.min.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'Datatables/datatables.min.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Rifa</title>
+  </head>
+  <body class="bg-dark">
+    <h1 class="text-white">Bienvenido</h1>
+    <main>
+      <a href="{% url 'crear' %}" class="btn btn-outline-primary">Crear</a>
+      <a href="{% url 'listado' 'Todos' %}" class="btn btn-outline-info">Listado de jugadores </a>
+      <a href="{% url 'listado' 'Cancelados' %}" class="btn btn-outline-success">Cancelados</a>
+      <a href="{% url 'listado' 'Por Pagar' %}" class="btn btn-outline-danger">Deudores</a>
+      <a href="{% url 'listado' 'Abonos' %}" class="btn btn-outline-warning">Abonados</a>
+
+      {% block container %} 
+      {% endblock container %}
+    </main>
+    <script src="{% static 'JQuery/jquery.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'Datatables/datatables.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script>
+       {% if messages %}
+      {% for message in messages %}
+          toastr.{{ message.tags }}("{{ message }}");
+      {% endfor %}
+      {% endif %}
+    </script>
+    {% block scripts %} {% endblock scripts %}
+  </body>
+</html>

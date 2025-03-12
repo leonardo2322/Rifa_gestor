@@ -1,0 +1,47 @@
+{% extends "Base.html" %}
+{% load custom_tags %}
+{% block container %}
+<div
+  class="p-4 rounded text-white mt-5 d-flex justify-content-center flex-column align-items-center"
+  style="background-color: rgb(2, 0, 26)"
+>
+  <div class="container">
+    {% if form.errors %}
+      <div class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">Error!</h4>
+        <p>Por favor, corrija los siguientes errores:</p>
+        <ul>
+          {% for field in form %}
+            {% for error in field.errors %}
+              <li>{{ field.label }}: {{ error }}</li>
+            {% endfor %}
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+  </div>
+  <form
+    action=""
+    method="post"
+    class="form-group p-4 border rounded w-50 mt-3 mb-3"
+    style="border-color: #caf438; background-color: #001925; color: white"
+  >
+    {% csrf_token %}
+    <h2 class="text-center mb-4">Cliente</h2>
+    {% for field in form %}
+        <h5 class="text-center"> {{ field.label }} </h5>
+        {% if field.name == 'estado' %}
+          <div class="form-check d-flex justify-content-center">
+            {{ field}}  <!-- Usa el widget generado por Django -->
+          </div>
+          {% else %}
+            {{ field|add_class:'form-control bg-dark text-white mt-3' }}
+
+        {% endif %}
+    
+    {% endfor %}
+
+    <button type="submit" class="btn btn-primary mt-4"> Guardar</button>
+    </form>
+</div>
+{% endblock container %}
