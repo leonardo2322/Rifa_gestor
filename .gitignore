@@ -1,0 +1,53 @@
+# Archivos de Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+*.pyo
+
+# Entorno virtual
+venv/
+env/
+*.venv
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Archivos de configuración y dependencias
+*.log
+db.sqlite3
+*.sqlite3
+.DS_Store
+*.env
+.envrc
+*.ini
+*.cfg
+*.bak
+
+# Archivos de migración de Django que pueden regenerarse
+**/migrations/*  
+!**/migrations/__init__.py  
+
+# Archivos estáticos y de caché
+staticfiles/
+media/
+*.sass-cache/
+*.cache
+node_modules/
+npm-debug.log
+
+# Archivos de compilación
+dist/
+build/
+*.pot
+*.mo
+
+# Docker y despliegue
+docker-compose.override.yml
+*.dockerfile
+*.pid
+
+# VSCode y JetBrains (PyCharm)
+.vscode/
+.idea/
+
+# Otros editore
