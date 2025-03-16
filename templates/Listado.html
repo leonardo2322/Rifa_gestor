@@ -2,6 +2,7 @@
 {% load custom_tags %}
 {% block title %} 
 <h1 class="title">Tabla de jugadores</h1> <h5 class="text-muted">Total dinero Recogido: {{ total_dinero }}$</h5> 
+<h6 class="text-muted">Numeros vendidos: {{ numeros_totales }} </h6>
 <div>
     <form method="GET" action="">
         <input type="text" class="form-control" name="q" id="search" placeholder="Buscar...">
@@ -17,7 +18,7 @@
             <tr>
             <th scope="col" class="text-center">Nr°</th>
             <th scope="col" class="text-center">Nombre</th>
-            <th scope="col" class="text-center">Telefono</th>
+            <!-- <th scope="col" class="text-center">Telefono</th> -->
             <th scope="col" class="text-center">Numeros Jugados</th>
             <th scope="col" class="text-center">Estado</th>
             <th scope="col" class="text-center">Abonos</th>
@@ -30,7 +31,7 @@
                     <tr>
                     <td scope="row">{{ item.id }}</td>
                     <td>{{ item.nombre }}</td>
-                    <td  class="text-center">{{ item.telefono }}</td>
+                    <!-- <td  class="text-center">{{ item.telefono }}</td> -->
                     <td>{% for n in item.numeros %}
                         {{ n }}
                     {% endfor %}

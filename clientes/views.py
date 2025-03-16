@@ -69,6 +69,9 @@ class Listado_de_juadores_view(ListView):
 
         total_dinero = Cliente.objects.filter(abono__gt=0,estado=False).aggregate(total_abono=Sum('abono'))['total_abono']
         tikets_cancelados = Cliente.objects.filter(estado=True).values('numeros')
+        clientes = Cliente.objects.all()
+        numeros_vendidos =  sum(len(cliente.numeros) for cliente in clientes if cliente.numeros)
+       
         for ticket in tikets_cancelados:
             numeros = ticket['numeros']
             if isinstance(numeros, str):
@@ -76,7 +79,6 @@ class Listado_de_juadores_view(ListView):
 
                 numeros = json.loads(ticket['numeros']) 
             cantidad_numeros = len(numeros)
-
             if cantidad_numeros == 3:
                 total_dinero += 5
             elif cantidad_numeros > 3 and cantidad_numeros < 6:
@@ -87,12 +89,14 @@ class Listado_de_juadores_view(ListView):
                 total_dinero += cantidad_numeros * 2
 
         context['total_dinero'] = total_dinero 
-
+        context['numeros_totales'] = numeros_vendidos
         paginator = Paginator(self.get_queryset(), self.paginate_by)
         page_number = self.request.GET.get('page')
         page_obj = paginator.get_page(page_number)
         context['jugadores'] = page_obj
         return context
+
+
 def template_abono(request, pk):
     cliente = get_object_or_404(Cliente, pk=pk)
     return render (request,'abono.html',{'cliente':cliente})
